@@ -19,8 +19,7 @@
         <div class="nav-wrapper">
           <a href="#" class="brand-logo"><img src="{% static 'logo.png' %}" width="64" height = '64' alt=""></a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li class="active"><a href="">Главная</a></li>
-            <li class="active"><a href="/feedback">Отзывы</a></li>
+            {% block navbar_active %}{% endblock %}
           </ul>
         </div>
     </nav>
