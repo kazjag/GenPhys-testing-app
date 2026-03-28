@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang='ru'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    {% load static %}
+
+    <link type="text/css" rel="stylesheet" href="{% static 'materialize.min.css' %}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'custom.css' %}" media="screen,projection"/>
+    <title>{% block title %}{% endblock %}</title>
+
+</head>
+<body>
+<div class="navbar-fixed" style="height: 104px">
+    <nav class = "orange darken-1">
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo"><img src="{% static 'logo.png' %}" width="64" height = '64' alt=""></a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li class="active"><a href="">Главная</a></li>
+            <li class="active"><a href="/feedback">Отзывы</a></li>
+          </ul>
+        </div>
+    </nav>
+</div>
+    <div class="container">
+        <div class = "lead">{% block lead %}{% endblock %}</div>
+        <div class = "body">{% block mainbody %}{% endblock %}</div>
+    </div>
+</body>
+</html>

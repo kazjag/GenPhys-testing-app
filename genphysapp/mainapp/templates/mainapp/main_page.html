@@ -1,0 +1,43 @@
+{% extends "mainapp/base_page.html" %}
+
+{% block title %}
+    Добро пожаловать!
+{% endblock %}
+
+{% block lead %}
+    <div class="row">
+      <div class="col s12" style="text-align: center;">
+        Добро пожаловать на страницу тестирования по оптике!
+      </div>
+    </div>
+{% endblock %}
+
+{% block mainbody %}
+<div class="row">
+    <div class="col s5">
+      <div class="card green darken-3">
+        <div class="card-content white-text">
+          <span class="card-title">Обсуждение задач</span>
+          <p>В данном разделе можно написать отзывы и замечания к задачам, а также посмотреть отзывы и замечания других участников</p>
+        </div>
+        <div class="card-action">
+              <a href="/feedback"><span class = "white-text">Смотреть отзывы<span></a>
+              <a href="/feedback_form"><span class = "white-text">Оставить отзыв<span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s5">
+      <div class="card green darken-3">
+        <div class="card-content white-text">
+          <span class="card-title">Тестирование</span>
+          <p>Вам предлагается решить 5 задач по разным аспектам оптики и фотоники. Задания предполагают краткий численный ответ</p>
+        </div>
+        <div class="card-action">
+              <a href="/testing_page"><span class = "white-text">Начать тестирование<span></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}
