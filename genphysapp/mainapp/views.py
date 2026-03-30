@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from .models import Feedback
+from .models import Feedback, Problem
 from django.core.cache import cache
 from . import forms_work
 from django.views.decorators.csrf import csrf_exempt
+import random
 
 # Create your views here.
 def main_page(request):
@@ -19,12 +20,10 @@ def render_feedbackform(request):
 
 @csrf_exempt
 def check_feedbackpost(request):
-    print(request.method)
     if request.method == "POST":
         cache.clear()
         author = request.POST.get("author", "")
         feedtext = request.POST.get("feedtext", "")
-        print('a ', author, ' a', 'b ', feedtext, ' b')
         context = {"author_name": author}
         if len(author) == 0:
             context["success"] = False
@@ -45,3 +44,32 @@ def check_feedbackpost(request):
     else:
         return render_feedbackform(request)
 
+def create_test(request):
+    indices = random.sample(range(1, Problem.objects.count()+1), 2)
+    objects = Problem.objects.filter(pk__in=indices)
+    context = {"objects": objects}
+    return render(request, "mainapp/task_page.html", context)
+
+@csrf_exempt
+def check_test_answers(request):
+    if request.method == "POST":
+        answers = request.POST
+        result,  correct_ans  = {}, {}
+        keys = [pk for pk in answers]
+        objects = Problem.objects.filter(pk__in=keys)
+        for pk in answers:
+            correct_ans[pk] = Problem.objects.get(pk=pk).answer
+            try:
+                answer = float(answers[pk])
+                if Problem.objects.get(pk=pk).left_border <= answer <= Problem.objects.get(pk=pk).right_border:
+                    result[pk] = True
+                    print('ok')
+                else:
+                    result[pk] = False
+            except ValueError:
+                result[pk] = False
+        return render(request, "mainapp/test_result.html", {"objects": objects, "keys": keys,
+                                                            "answers": answers.values, "result": result.values(), "res_sum": sum(result.values()),
+                                                            "task_sum": len(keys)})
+    else:
+        return main_page(request)

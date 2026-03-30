@@ -1,0 +1,32 @@
+{% extends "mainapp/base_page.html" %}
+{% load list_work %}
+
+{% block title %}
+    Результаты
+{% endblock %}
+
+{% block lead %}
+    <div class="row">
+      <div class="col s12" style="text-align: center;">
+        Результат теста: {{ res_sum }} / {{ task_sum }}
+      </div>
+    </div>
+{% endblock %}
+
+
+{% block navbar_active %}
+<li><a href="/">Главная</a></li>
+<li><a href="/feedback">Отзывы</a></li>
+{% endblock %}
+
+{% block mainbody %}
+    <h2> Комментарии по задачам:</h2>
+    {% for object in objects %}
+        <p style="font-weight: bold;">Задача {{ forloop.counter }}: {% if result|get_item_by_index:forloop.counter %} 1{% else %} 0{% endif %}/1.</p>
+        <p>{{object.task_text }}</p>
+        <p><b style="font-weight: bold;"> Правильный ответ: </b>{{ object.answer }}. <b style="font-weight: bold;">Ваш ответ: </b> {{ answers|get_item_by_index:forloop.counter }} </p>
+    {% endfor %}
+    <div class="row">
+        <a class="btn btn-primary green" href="/">На главную</a>
+    </div>
+{% endblock %}
