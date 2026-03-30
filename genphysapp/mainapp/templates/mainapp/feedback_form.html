@@ -1,0 +1,50 @@
+{% extends "mainapp/base_page.html" %}
+
+{% block title %}
+    Форма ввода отзыва к задачам
+{% endblock %}
+
+{% block lead %}
+    <div class="row">
+      <div class="col s12" style="text-align: center;">
+        Пожалуйста, заполните все поля ниже:
+      </div>
+    </div>
+{% endblock %}
+
+
+{% block navbar_active %}
+<li><a href="/">Главная</a></li>
+<li><a href="/feedback">Отзывы</a></li>
+{% endblock %}
+
+{% block mainbody %}
+<div class="row">
+    <form class="col s12" method="post">
+      <div class="row">
+        <div class="col s12">
+          Автор:
+          <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="Петр Петров" id="author" name = "author" type="text" class="validate" required = "">
+            <span class="helper-text" data-error="Ошибка!" data-success=""></span>
+        </div>
+        </div>
+      </div>
+
+    <div class="row">
+        <div class="col s12">
+          Отзыв:
+          <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="Введите здесь текст Вашего отзыва" id="feedtext" name = "feedtext" type="text" class="validate" required = "">
+            <span class="helper-text" data-error="Ошибка!" data-success=""></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <button class="btn btn-primary" formaction="/send_feedback" type="submit">Отправить отзыв</button>
+    </div>
+    </form>
+  </div>
+{% endblock %}
