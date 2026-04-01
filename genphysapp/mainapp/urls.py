@@ -11,4 +11,5 @@ urlpatterns = [
     path('send_feedback', views.check_feedbackpost),
     path('testing_page', views.create_test),
     path('send_answers', views.check_test_answers),
+    path('register', views.register)
 ]

@@ -5,6 +5,7 @@ import random
 from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
+from django.contrib.auth.models import User
 from .models import Feedback, Problem
 from . import forms_work
 # pylint: disable=no-member
@@ -108,4 +109,39 @@ def check_test_answers(request):
                                 "task_sum": len(keys)})
 
     return main_page(request)
+
+@csrf_exempt
+def register(request):
+    if request.method == "POST":
+        cache.clear()
+        context = {}
+        username = request.POST.get("username", "")
+        email = request.POST.get("email", "")
+        pass1 = request.POST.get("pass1", "")
+        pass2 = request.POST.get("pass2", "")
+        if len(username) < 3:
+            context["success"] = False
+            context["comment"] = "Имя пользователя меньше 3 символов"
+        elif len(username) > 50:
+            context["success"] = False
+            context["comment"] = "Имя пользователя длиннее 50 символов"
+        elif User.objects.filter(username=username).exists():
+            context["success"] = False
+            context["comment"] = "Пользователь с таким именем уже существует"
+        elif '@' not in email or len(email) < 4:
+            context["success"] = False
+            context["comment"] = "Некорректный адрес электронной почты"
+        elif len(pass1) < 5:
+            context["success"] = False
+            context["comment"] = "Слишком короткий пароль"
+        elif pass1 != pass2:
+            context["success"] = False
+            context["comment"] = "Пароли не совпали. Повторите попытку"
+        else:
+            context["success"] = True
+            User.objects.create_user(username, email, pass1)
+        return render(request, "mainapp/register_result.html", context)
+
+    else:
+        return render(request, "mainapp/register_page.html")
 # pylint: enable=no-member
