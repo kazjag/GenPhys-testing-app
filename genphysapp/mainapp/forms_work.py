@@ -1,5 +1,15 @@
+"""
+ Functions to work with forms
+"""
+#pylint: disable=no-member
 from .models import Feedback
 
-
 def post_feedback(author, feedtext):
-     Feedback.objects.create(author=author, text=feedtext)
+    """
+
+    :param author: author of the feedback
+    :param feedtext: text of feedback
+    :return: None
+    """
+    Feedback.objects.create(author=author, text=feedtext)
+#pylint: enable=no-member

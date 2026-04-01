@@ -1,3 +1,6 @@
+"""
+URLS -> view funcs
+"""
 from django.urls import path
 from . import views
 
