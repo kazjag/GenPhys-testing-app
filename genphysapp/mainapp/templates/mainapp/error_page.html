@@ -1,13 +1,13 @@
 {% extends "mainapp/base_page.html" %}
 
 {% block title %}
-    {% if success %}Успех!{% else %}Ошибка!{% endif %}
+    Ошибка входа!
 {% endblock %}
 
 {% block lead %}
     <div class="row">
       <div class="col s12" style="text-align: center;">
-
+        Ошибка входа
       </div>
     </div>
 {% endblock %}
@@ -21,16 +21,7 @@
 {% endblock %}
 
 {% block mainbody %}
-    <div class="col s12" id="feedback_form-result">
-        <h2 class="row">Результат запроса:</h2>
-        Уважаемый <span>{{ author_name }}</span>,<br/>
-            Отзыв <span>{% if success %}отправлен успешно!{% else %}не был отправлен из-за ошибки{% endif %}</span>.
-
-
-        <h2>Комментарий:</h2>
-        {{ comment }}
-    <div class="row">
+<div class="row">
         <a class="btn btn-primary green" href="/">На главную</a>
-    </div>
     </div>
 {% endblock %}

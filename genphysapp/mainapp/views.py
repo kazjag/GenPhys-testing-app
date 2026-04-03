@@ -2,9 +2,12 @@
 View functions
 """
 import random
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as lgn
+from django.contrib.auth import logout as lgt
 from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import Feedback, Problem
 from . import forms_work
@@ -144,4 +147,23 @@ def register(request):
 
     else:
         return render(request, "mainapp/register_page.html")
+
+def login_page(request):
+    return render(request, "mainapp/login_page.html", {"user": request.user})
+
+@csrf_exempt
+def login(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            lgn(request, user)
+            return render(request, "mainapp/success_page.html")
+        else:
+            return render(request, "mainapp/error_page.html")
+
+def logout(request):
+    lgt(request)
+    return redirect("/")
 # pylint: enable=no-member
