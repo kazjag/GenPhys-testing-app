@@ -1,7 +1,6 @@
 """
  Functions to work with forms
 """
-#pylint: disable=no-member
 from .models import Feedback
 
 def post_feedback(author, feedtext):
@@ -12,4 +11,3 @@ def post_feedback(author, feedtext):
     :return: None
     """
     Feedback.objects.create(author=author, text=feedtext)
-#pylint: enable=no-member

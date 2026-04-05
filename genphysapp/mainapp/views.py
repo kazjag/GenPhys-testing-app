@@ -11,7 +11,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import Feedback, Problem
 from . import forms_work
-# pylint: disable=no-member
+
 # Create your views here.
 def main_page(request):
     """
@@ -77,8 +77,9 @@ def create_test(request):
                 :param request: request
                 :return: render object
     """
-    indices = random.sample(range(1, Problem.objects.count()+1), 2)
-    objects = Problem.objects.filter(pk__in=indices)
+    print(list(Problem.objects.all().values_list('pk')))
+    objects = Problem.objects.filter(pk__in = random.sample(list(Problem.objects.all().\
+                                                            values_list('pk', flat = True)), 3))
     context = {"objects": objects}
     return render(request, "mainapp/task_page.html", context)
 
@@ -115,6 +116,11 @@ def check_test_answers(request):
 
 @csrf_exempt
 def register(request):
+    """
+    Registers user
+    :param request:
+    :return: render object
+    """
     if request.method == "POST":
         cache.clear()
         context = {}
@@ -145,14 +151,23 @@ def register(request):
             User.objects.create_user(username, email, pass1)
         return render(request, "mainapp/register_result.html", context)
 
-    else:
-        return render(request, "mainapp/register_page.html")
+    return render(request, "mainapp/register_page.html")
 
 def login_page(request):
+    """
+    renders login page
+    :param request:
+    :return: render object
+    """
     return render(request, "mainapp/login_page.html", {"user": request.user})
 
 @csrf_exempt
 def login(request):
+    """
+    authorizes user
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -160,10 +175,14 @@ def login(request):
         if user is not None:
             lgn(request, user)
             return render(request, "mainapp/success_page.html")
-        else:
-            return render(request, "mainapp/error_page.html")
+        return render(request, "mainapp/error_page.html")
+    return None
 
 def logout(request):
+    """
+    logouts user
+    :param request:
+    :return:
+    """
     lgt(request)
     return redirect("/")
-# pylint: enable=no-member

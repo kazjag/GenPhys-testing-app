@@ -27,6 +27,8 @@
         <p style="font-weight: bold;">Задача {{ forloop.counter }}: {% if result|get_item_by_index:forloop.counter %} 1{% else %} 0{% endif %}/1.</p>
         <p>{{object.task_text }}</p>
         <p><b style="font-weight: bold;"> Правильный ответ: </b>{{ object.answer }}. <b style="font-weight: bold;">Ваш ответ: </b> {{ answers|get_item_by_index:forloop.counter }} </p>
+        <p><b> Комментарий: </b>{{ object.commentary }}</p>
+        <br>
     {% endfor %}
     <div class="row">
         <a class="btn btn-primary green" href="/">На главную</a>
